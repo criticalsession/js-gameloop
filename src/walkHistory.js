@@ -15,6 +15,8 @@ class WalkHistory {
   }
 
   logPosition(pos) {
+    if (pos === null || pos === undefined) return;
+
     let existingHistory = this.histories.find(
       (h) => h.xPos === pos.xPos && h.yPos === pos.yPos
     );

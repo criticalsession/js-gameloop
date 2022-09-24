@@ -11,8 +11,8 @@ class GameLoop {
     this.ctx = this.cnv.getContext("2d");
     document.body.style.margin = 0;
     document.body.style.padding = 0;
-    this.cnv.width = window.innerWidth;
-    this.cnv.height = window.innerHeight - 10;
+    this.cnv.width = window.innerWidth / 2;
+    this.cnv.height = window.innerHeight / 2 - 10;
   }
 
   init() {}

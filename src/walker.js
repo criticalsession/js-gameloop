@@ -1,4 +1,4 @@
-import random from "random";
+import { getRandomInt } from "./utils.js";
 
 class Walker {
   constructor() {
@@ -13,6 +13,9 @@ class Walker {
 
     this.baseSpeed = 0.1; // lower is faster, 1 is fastest
     this.speedCounter = 0;
+
+    this.age = 0;
+    this.isAlive = true;
 
     this.directions = {
       UP: 4,
@@ -35,7 +38,15 @@ class Walker {
     return this.size * 4;
   }
 
-  walk(cnv) {
+  walk(cnv, onSpawn) {
+    if (!this.isAlive) return;
+
+    this.age++;
+    if (this.age >= 600) {
+      this.isAlive = false;
+      return;
+    }
+
     if (this.speedCounter < this.calculateSpeed()) {
       this.speedCounter++;
       return null;
@@ -43,8 +54,8 @@ class Walker {
 
     this.speedCounter = 0;
 
-    const keepDirection = random.int(0, 100);
-    let direction = random.int(1, 4);
+    const keepDirection = getRandomInt(0, 100);
+    let direction = getRandomInt(1, 4);
     if (keepDirection >= 15 && this.lastDirection !== null) {
       direction = this.lastDirection;
     }
@@ -78,7 +89,7 @@ class Walker {
   }
 
   tryGrow() {
-    const chance = random.int(0, 1024);
+    const chance = getRandomInt(0, 1024);
     if (chance === 1024) this.size++;
   }
 
@@ -107,6 +118,17 @@ class Walker {
       this.yPos = cnv.height - this.drawSize();
       this.lastDirection = this.directions.UP;
     }
+  }
+
+  checkSpawnWalker() {
+    if (getRandomInt(1, 256) === 256) {
+      return {
+        xPos: this.xPos,
+        yPos: this.yPos,
+      };
+    }
+
+    return null;
   }
 }
 
