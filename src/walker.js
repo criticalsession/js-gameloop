@@ -11,7 +11,7 @@ class Walker {
 
     this.lastDirection = null;
 
-    this.baseSpeed = 0.1; // lower is faster, 1 is fastest
+    this.baseSpeed = 0; // lower is faster, 1 is fastest
     this.speedCounter = 0;
 
     this.age = 0;
@@ -38,7 +38,7 @@ class Walker {
     return this.size * 4;
   }
 
-  walk(cnv, onSpawn) {
+  walk(cnv, engine) {
     if (!this.isAlive) return;
 
     this.age++;
@@ -80,6 +80,11 @@ class Walker {
     this.lastDirection = direction;
 
     this.tryGrow();
+
+    if (engine.walkers.length < engine.maxWalkers) {
+      const walkerSpawned = this.checkSpawnWalker();
+      if (walkerSpawned !== null) engine.onSpawnWalker(walkerSpawned);
+    }
 
     return {
       xPos: this.xPos,

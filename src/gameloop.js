@@ -1,6 +1,6 @@
 class GameLoop {
   constructor() {
-    this.fps = 60;
+    this.fps = 30;
     this.cnv = null;
     this.ctx = null;
     this.loop = null;

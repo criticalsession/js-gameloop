@@ -8,7 +8,7 @@ class Engine {
     this.walkers = [];
     this.walkHistory = new WalkHistory();
     this.maxWalkers = 500;
-    this.drawHistoryEnabled = true;
+    this.drawHistoryEnabled = false;
 
     this.gameloop.init = () => {
       this.walkers.forEach((walker) => {
@@ -21,16 +21,11 @@ class Engine {
 
     this.gameloop.update = () => {
       this.walkers.forEach((walker) => {
-        const newPosition = walker.walk(this.gameloop.cnv);
+        const newPosition = walker.walk(this.gameloop.cnv, this);
         if (newPosition !== null && this.drawHistoryEnabled)
           this.walkHistory.logPosition(newPosition);
 
         this.removeDeadWalkers();
-
-        if (this.walkers.length < this.maxWalkers) {
-          const walkerSpawned = walker.checkSpawnWalker();
-          if (walkerSpawned !== null) this.onSpawnWalker(walkerSpawned);
-        }
       });
 
       if (this.drawHistoryEnabled) this.walkHistory.decayHistory();
