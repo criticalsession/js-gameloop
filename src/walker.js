@@ -79,7 +79,7 @@ class Walker {
 
     this.lastDirection = direction;
 
-    this.tryGrow();
+    //this.tryGrow();
 
     if (engine.walkers.length < engine.maxWalkers) {
       const walkerSpawned = this.checkSpawnWalker();
