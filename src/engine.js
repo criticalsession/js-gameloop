@@ -46,6 +46,8 @@ class Engine {
       this.walkers.forEach((walker) => {
         walker.draw(this.gameloop.ctx);
       });
+
+      this.gameloop.printFPS();
     };
   }
 

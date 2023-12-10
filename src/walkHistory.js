@@ -2,13 +2,13 @@ class WalkHistory {
   constructor() {
     this.histories = [];
     this.historyColor = [
-      "#eeeeee",
-      "#dddddd",
-      "#cccccc",
-      "#bbbbbb",
-      "#aaaaaa",
-      "#999999",
-      "#888888",
+      "#CDF0AF",
+      "#DBE9B6",
+      "#E6E4BB",
+      "#F2DFC1",
+      "#F1D4BF",
+      "#F0C4BB",
+      "#F0B9B9",
     ];
     this.maxDepth = 7;
     this.decay = 60;
