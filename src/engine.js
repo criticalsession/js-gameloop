@@ -8,7 +8,7 @@ class Engine {
     this.walkers = [];
     this.walkHistory = new WalkHistory();
     this.maxWalkers = 500;
-    this.drawHistoryEnabled = false;
+    this.drawHistoryEnabled = true;
 
     this.gameloop.init = () => {
       this.walkers.forEach((walker) => {

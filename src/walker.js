@@ -17,11 +17,17 @@ class Walker {
     this.age = 0;
     this.isAlive = true;
 
+    this.oddsOfSpawn = 100;
+
     this.directions = {
-      UP: 4,
-      LEFT: 2,
       RIGHT: 1,
+      LEFT: 2,
       DOWN: 3,
+      UP: 4,
+      RIGHT_UP: 5,
+      RIGHT_DOWN: 6,
+      LEFT_UP: 7,
+      LEFT_DOWN: 8,
     };
   }
 
@@ -55,7 +61,7 @@ class Walker {
     this.speedCounter = 0;
 
     const keepDirection = getRandomInt(0, 100);
-    let direction = getRandomInt(1, 4);
+    let direction = getRandomInt(1, 8);
     if (keepDirection >= 15 && this.lastDirection !== null) {
       direction = this.lastDirection;
     }
@@ -73,6 +79,22 @@ class Walker {
       case this.directions.UP:
         this.yPos += -this.step;
         break;
+      case this.directions.RIGHT_UP:
+        this.xPos += this.step;
+        this.yPos += -this.step;
+      break;
+      case this.directions.RIGHT_DOWN:
+        this.xPos += this.step;
+        this.yPos += this.step;
+      break;
+      case this.directions.LEFT_UP:
+        this.xPos += -this.step;
+        this.yPos += -this.step;
+      break;
+      case this.directions.LEFT_DOWN:
+        this.xPos += -this.step;
+        this.yPos += this.step;
+      break;
     }
 
     this.checkLimits(cnv);
@@ -126,7 +148,7 @@ class Walker {
   }
 
   checkSpawnWalker() {
-    if (getRandomInt(1, 256) === 256) {
+    if (getRandomInt(1, this.oddsOfSpawn) === this.oddsOfSpawn) {
       return {
         xPos: this.xPos,
         yPos: this.yPos,
