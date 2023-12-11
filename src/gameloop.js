@@ -79,16 +79,15 @@ class GameLoop {
   start() {
     this.prepareCanvas();
     this.init();
+    this.renderCycle();
+  }
 
-    requestAnimationFrame(() => {
-      this.update();
-      this.render();
-    })
-
-    this.loop = setInterval(() => {
-      this.update();
-      this.render();
-    }, 1000 / maxFPS);
+  renderCycle() {
+    this.update();
+    this.render();
+    setTimeout(() => {
+      this.renderCycle();
+    }, 1);
   }
 }
 

@@ -64,6 +64,8 @@ class Engine {
       });
 
       this.gameloop.printData(this.population);
+
+      this.renderCells.clear();
     };
   }
 
