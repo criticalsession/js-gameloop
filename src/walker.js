@@ -22,6 +22,9 @@ class Walker {
     this.oddsOfSpawn = 100;
     this.keepDirectionPerc = 80;
 
+    this.cnvWidth = 0;
+    this.cnvHeight = 0;
+
     this.directions = {
       RIGHT: 1,
       LEFT: 2,
@@ -34,9 +37,11 @@ class Walker {
     };
   }
 
-  init(startX, startY) {
+  init(startX, startY, cnvWidth, cnvHeight) {
     this.xPos = startX;
     this.yPos = startY;
+    this.cnvWidth = cnvWidth;
+    this.cnvHeight = cnvHeight;
 
     this.maxAge = getRandomInt(deathInitialMinAge, deathInitialMaxAge);
   }
@@ -114,16 +119,9 @@ class Walker {
     };
   }
 
-  draw(ctx) {
-    if (!this.isAlive) return;
-
-    ctx.fillStyle = this.color;
-    ctx.fillRect(this.xPos, this.yPos, this.drawSize(), this.drawSize());
-  }
-
-  checkLimits(cnv) {
-    if (this.xPos + this.drawSize() > cnv.width) {
-      this.xPos = cnv.width - this.drawSize();
+  checkLimits() {
+    if (this.xPos + this.drawSize() > this.cnvWidth) {
+      this.xPos = this.cnvWidth - this.drawSize();
       return this.directions.LEFT;
     }
 
@@ -137,8 +135,8 @@ class Walker {
       return this.directions.DOWN;
     }
 
-    if (this.yPos + this.drawSize() > cnv.height) {
-      this.yPos = cnv.height - this.drawSize();
+    if (this.yPos + this.drawSize() > this.cnvHeight) {
+      this.yPos = this.cnvHeight - this.drawSize();
       return this.directions.UP;
     }
 
