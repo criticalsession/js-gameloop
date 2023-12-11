@@ -103,11 +103,6 @@ class Walker {
 
     //this.tryGrow();
 
-    if (engine.walkers.length < engine.maxWalkers) {
-      const walkerSpawned = this.checkSpawnWalker();
-      if (walkerSpawned !== null) engine.onSpawnWalker(walkerSpawned);
-    }
-
     return {
       xPos: this.xPos,
       yPos: this.yPos,
