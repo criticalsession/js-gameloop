@@ -1,6 +1,7 @@
+import {maxFPS} from './vars.js'
+
 class GameLoop {
   constructor() {
-    this.maxFPS = 60;
     this.cnv = null;
     this.ctx = null;
     this.loop = null;
@@ -82,7 +83,7 @@ class GameLoop {
     this.loop = setInterval(() => {
       this.update();
       this.render();
-    }, 1000 / this.maxFPS);
+    }, 1000 / maxFPS);
   }
 }
 

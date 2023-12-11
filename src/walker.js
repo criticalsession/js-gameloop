@@ -1,4 +1,5 @@
 import { getRandomInt } from "./utils.js";
+import { deathInitialMaxAge, deathInitialMinAge } from "./vars.js";
 
 class Walker {
   constructor() {
@@ -19,6 +20,7 @@ class Walker {
     this.isAlive = true;
 
     this.oddsOfSpawn = 100;
+    this.keepDirectionPerc = 80;
 
     this.directions = {
       RIGHT: 1,
@@ -36,7 +38,7 @@ class Walker {
     this.xPos = startX;
     this.yPos = startY;
 
-    this.maxAge = getRandomInt(400, 2000);
+    this.maxAge = getRandomInt(deathInitialMinAge, deathInitialMaxAge);
   }
 
   calculateSpeed() {
@@ -65,7 +67,7 @@ class Walker {
 
     const keepDirection = getRandomInt(0, 100);
     let direction = getRandomInt(1, 8);
-    if (keepDirection >= 15 && this.lastDirection !== null) {
+    if (keepDirection >= (100 - this.keepDirectionPerc) && this.lastDirection !== null) {
       direction = this.lastDirection;
     }
 
@@ -102,21 +104,14 @@ class Walker {
 
     const newDirection = this.checkLimits(cnv);
     if (newDirection) direction = newDirection;
-    
-    this.lastDirection = direction;
 
-    //this.tryGrow();
+    this.lastDirection = direction;
 
     return {
       xPos: this.xPos,
       yPos: this.yPos,
       size: this.drawSize(),
     };
-  }
-
-  tryGrow() {
-    const chance = getRandomInt(0, 1024);
-    if (chance === 1024) this.size++;
   }
 
   draw(ctx) {

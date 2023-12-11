@@ -1,13 +1,13 @@
 import GameLoop from "./gameloop.js";
 import Walker from "./walker.js";
 import WalkHistory from "./walkHistory.js";
+import { maxWalkers } from './vars.js';
 
 class Engine {
   constructor() {
     this.gameloop = new GameLoop();
     this.walkers = null;
     this.walkHistory = new WalkHistory();
-    this.maxWalkers = 20000;
     this.drawHistoryEnabled = false;
     this.removeDeadWalkersCounter = 0;
 
@@ -26,7 +26,7 @@ class Engine {
         if (newPosition !== null && this.drawHistoryEnabled)
           this.walkHistory.logPosition(newPosition);
 
-        if (this.walkers.size < this.maxWalkers) {
+        if (this.walkers.size < maxWalkers) {
           const walkerSpawned = walker.checkSpawnWalker();
           if (walkerSpawned !== null) this.onSpawnWalker(walkerSpawned);
         }
