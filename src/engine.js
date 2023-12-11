@@ -38,7 +38,7 @@ class Engine {
         }
 
         if (walker.isAlive) {
-          this.renderCells.add({ x: walker.xPos, y: walker.yPos, size: walker.drawSize(), color: walker.color });
+          this.renderCells.add([ walker.xPos, walker.yPos, walker.size * 4 ]);
         }
       });
 
@@ -60,7 +60,7 @@ class Engine {
 
       this.renderCells.forEach(cell => {
         this.gameloop.ctx.fillStyle = 'black';
-        this.gameloop.ctx.fillRect(cell.x, cell.y, cell.size, cell.size);
+        this.gameloop.ctx.fillRect(cell[0], cell[1], cell[2], cell[2]);
       });
 
       this.gameloop.printData(this.population);

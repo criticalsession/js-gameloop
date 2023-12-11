@@ -80,6 +80,11 @@ class GameLoop {
     this.prepareCanvas();
     this.init();
 
+    requestAnimationFrame(() => {
+      this.update();
+      this.render();
+    })
+
     this.loop = setInterval(() => {
       this.update();
       this.render();
