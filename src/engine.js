@@ -9,7 +9,7 @@ class Engine {
     this.walkHistory = new WalkHistory();
     this.maxWalkers = 20000;
     this.drawHistoryEnabled = false;
-    this.removeWalkersCounter = 0;
+    this.removeDeadWalkersCounter = 0;
 
     this.gameloop.init = () => {
       this.walkers.forEach((walker) => {
@@ -57,7 +57,7 @@ class Engine {
         walker.draw(this.gameloop.ctx);
       });
 
-      this.gameloop.printFPS();
+      this.gameloop.printData(this.walkers.size);
     };
   }
 

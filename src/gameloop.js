@@ -12,6 +12,10 @@ class GameLoop {
       lastFPS: null,
       msPassedSum: 0,
     };
+    this.dataContainers = {
+      fps: null,
+      population: null,
+    };
   }
 
   prepareCanvas() {
@@ -21,6 +25,9 @@ class GameLoop {
     document.body.style.padding = 0;
     this.cnv.width = window.innerWidth / 2;
     this.cnv.height = window.innerHeight / 2 - 10;
+
+    this.dataContainers.fps = document.getElementById('fps');
+    this.dataContainers.population = document.getElementById('population');
   }
 
   init() {}
@@ -29,7 +36,7 @@ class GameLoop {
 
   render() {}
 
-  printFPS() {
+  printData(population) {
     if (this.fps.show) {
       // work fps based on last frame
       const nowTime = new Date();
@@ -57,16 +64,15 @@ class GameLoop {
       this.ctx.fillStyle = "red";
       this.ctx.font = "bold 16px sans-serif";
       if (this.fps.lastFPS !== null) {
-        // print fps
-        this.ctx.fillText(
-          `FPS ${this.fps.lastFPS.toFixed(1)}`,
-          this.cnv.width - 100,
-          30
-        );
+        this.dataContainers.fps.innerHTML = `FPS: ${this.fps.lastFPS.toFixed(1)}`;
       } else {
-        this.ctx.fillText(`FPS --`, this.cnv.width - 100, 30);
+        this.dataContainers.fps.innerHTML = `FPS: calculating...`;
       }
+    } else {
+      this.dataContainers.fps.innerHTML = `FPS: disabled`;
     }
+
+    this.dataContainers.population.innerHTML = `Population: ${population}`;
   }
 
   start() {

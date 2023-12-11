@@ -1,12 +1,18 @@
 {
-  "name": "js-gameloop",
+  "name": "js-randomcrawler",
   "version": "1.0.0",
-  "description": "",
+  "description": "Implementation of random crawler in js using basic gameloop",
   "main": "index.js",
-  "scripts": {
-    "build": "webpack"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/criticalsession/js-randomcrawler"
   },
-  "author": "",
+  "scripts": {
+    "build": "webpack --mode=production",
+    "build-dev": "webpack --mode=development",
+    "build-watch": "webpack --watch --mode=development"
+  },
+  "author": "CriticalSession",
   "license": "ISC",
   "devDependencies": {
     "webpack": "^5.74.0",

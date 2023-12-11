@@ -4,3 +4,9 @@ a, a:hover, a:link, a:active, a:visited {
     font-weight: bold;
     display: inline-block;
 }
+
+.data-container {
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 14px;
+    padding: 10px;
+}
