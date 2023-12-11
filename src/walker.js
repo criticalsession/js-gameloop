@@ -100,8 +100,9 @@ class Walker {
       break;
     }
 
-    this.checkLimits(cnv);
-
+    const newDirection = this.checkLimits(cnv);
+    if (newDirection) direction = newDirection;
+    
     this.lastDirection = direction;
 
     //this.tryGrow();
@@ -128,23 +129,25 @@ class Walker {
   checkLimits(cnv) {
     if (this.xPos + this.drawSize() > cnv.width) {
       this.xPos = cnv.width - this.drawSize();
-      this.lastDirection = this.directions.LEFT;
+      return this.directions.LEFT;
     }
 
     if (this.xPos < 0) {
       this.xPos = 0;
-      this.lastDirection = this.directions.RIGHT;
+      return this.directions.RIGHT;
     }
 
     if (this.yPos < 0) {
       this.yPos = 1;
-      this.lastDirection = this.directions.DOWN;
+      return this.directions.DOWN;
     }
 
     if (this.yPos + this.drawSize() > cnv.height) {
       this.yPos = cnv.height - this.drawSize();
-      this.lastDirection = this.directions.UP;
+      return this.directions.UP;
     }
+
+    return null;
   }
 
   checkSpawnWalker() {
