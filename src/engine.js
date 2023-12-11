@@ -7,8 +7,9 @@ class Engine {
     this.gameloop = new GameLoop();
     this.walkers = null;
     this.walkHistory = new WalkHistory();
-    this.maxWalkers = 500;
+    this.maxWalkers = 20000;
     this.drawHistoryEnabled = false;
+    this.removeWalkersCounter = 0;
 
     this.gameloop.init = () => {
       this.walkers.forEach((walker) => {
@@ -29,9 +30,13 @@ class Engine {
           const walkerSpawned = walker.checkSpawnWalker();
           if (walkerSpawned !== null) this.onSpawnWalker(walkerSpawned);
         }
-
-        this.removeDeadWalkers();
       });
+
+      this.removeDeadWalkersCounter++;
+      if (this.removeDeadWalkersCounter >= 100){
+        this.removeDeadWalkers();
+        this.removeDeadWalkersCounter = 0;
+      }
 
       if (this.drawHistoryEnabled) this.walkHistory.decayHistory();
     };
@@ -70,7 +75,11 @@ class Engine {
   }
 
   removeDeadWalkers() {
-    this.walkers = new Set([...this.walkers].filter((p) => p.isAlive));
+    for (let w of this.walkers) {
+      if (!w.isAlive) {
+        this.walkers.delete(w);
+      }
+    }
   }
 }
 

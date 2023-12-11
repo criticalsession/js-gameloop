@@ -15,6 +15,7 @@ class Walker {
     this.speedCounter = 0;
 
     this.age = 0;
+    this.maxAge = 0;
     this.isAlive = true;
 
     this.oddsOfSpawn = 100;
@@ -34,6 +35,8 @@ class Walker {
   init(startX, startY) {
     this.xPos = startX;
     this.yPos = startY;
+
+    this.maxAge = getRandomInt(400, 2000);
   }
 
   calculateSpeed() {
@@ -48,7 +51,7 @@ class Walker {
     if (!this.isAlive) return;
 
     this.age++;
-    if (this.age >= 600) {
+    if (this.age >= this.maxAge) {
       this.isAlive = false;
       return;
     }
@@ -116,6 +119,8 @@ class Walker {
   }
 
   draw(ctx) {
+    if (!this.isAlive) return;
+
     ctx.fillStyle = this.color;
     ctx.fillRect(this.xPos, this.yPos, this.drawSize(), this.drawSize());
   }
