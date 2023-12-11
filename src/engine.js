@@ -5,7 +5,7 @@ import WalkHistory from "./walkHistory.js";
 class Engine {
   constructor() {
     this.gameloop = new GameLoop();
-    this.walkers = [];
+    this.walkers = null;
     this.walkHistory = new WalkHistory();
     this.maxWalkers = 500;
     this.drawHistoryEnabled = false;
@@ -25,7 +25,7 @@ class Engine {
         if (newPosition !== null && this.drawHistoryEnabled)
           this.walkHistory.logPosition(newPosition);
 
-        if (this.walkers.length < this.maxWalkers) {
+        if (this.walkers.size < this.maxWalkers) {
           const walkerSpawned = walker.checkSpawnWalker();
           if (walkerSpawned !== null) this.onSpawnWalker(walkerSpawned);
         }
@@ -57,7 +57,8 @@ class Engine {
   }
 
   go() {
-    this.walkers.push(new Walker());
+    this.walkers = new Set();
+    this.walkers.add(new Walker());
     this.gameloop.start();
   }
 
@@ -65,11 +66,11 @@ class Engine {
     let newWalker = new Walker();
     newWalker.init(newSpawn.xPos, newSpawn.yPos);
 
-    this.walkers.push(newWalker);
+    this.walkers.add(newWalker);
   }
 
   removeDeadWalkers() {
-    this.walkers = this.walkers.filter((p) => p.isAlive);
+    this.walkers = new Set([...this.walkers].filter((p) => p.isAlive));
   }
 }
 
