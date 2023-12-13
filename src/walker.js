@@ -59,8 +59,15 @@ class Walker {
     if (!this.isAlive) return;
 
     this.age++;
+    this.energy--;
+
     if (this.age >= this.maxAge) {
-      this.isAlive = false;
+      this.die();
+      return;
+    }
+
+    if (this.energy <= 0) {
+      this.die();
       return;
     }
 
@@ -73,7 +80,10 @@ class Walker {
 
     const keepDirection = getRandomInt(0, 100);
     let direction = getRandomInt(1, 8);
-    if (keepDirection >= (100 - this.keepDirectionPerc) && this.lastDirection !== null) {
+    if (
+      keepDirection >= 100 - this.keepDirectionPerc &&
+      this.lastDirection !== null
+    ) {
       direction = this.lastDirection;
     }
 
@@ -93,19 +103,19 @@ class Walker {
       case this.directions.RIGHT_UP:
         this.xPos += this.step;
         this.yPos += -this.step;
-      break;
+        break;
       case this.directions.RIGHT_DOWN:
         this.xPos += this.step;
         this.yPos += this.step;
-      break;
+        break;
       case this.directions.LEFT_UP:
         this.xPos += -this.step;
         this.yPos += -this.step;
-      break;
+        break;
       case this.directions.LEFT_DOWN:
         this.xPos += -this.step;
         this.yPos += this.step;
-      break;
+        break;
     }
 
     const newDirection = this.checkLimits();
@@ -145,7 +155,11 @@ class Walker {
   }
 
   checkSpawnWalker() {
+    if (this.energy < 20) return null;
+
     if (getRandomInt(1, this.oddsOfSpawn) === this.oddsOfSpawn) {
+      this.energy -= 50;
+
       return {
         xPos: this.xPos,
         yPos: this.yPos,
@@ -153,6 +167,10 @@ class Walker {
     }
 
     return null;
+  }
+
+  die() {
+    this.isAlive = false;
   }
 }
 

@@ -40,10 +40,11 @@ class Engine {
 
       this.walkers.forEach((walker) => {
         const newPosition = walker.walk();
-        if (this.walkers.length < maxWalkers) {
-          const walkerSpawned = walker.checkSpawnWalker();
-          if (walkerSpawned !== null) this.onSpawnWalker(walkerSpawned);
-        }
+        // if (this.walkers.length < maxWalkers) {
+        // }
+
+        const walkerSpawned = walker.checkSpawnWalker();
+        if (walkerSpawned !== null) this.onSpawnWalker(walkerSpawned);
 
         if (walker.isAlive) {
           this.renderWalkers.add([ walker.xPos, walker.yPos, walker.size * 4 ]);
