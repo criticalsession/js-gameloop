@@ -24,8 +24,8 @@ class GameLoop {
     this.ctx = this.cnv.getContext("2d");
     document.body.style.margin = 0;
     document.body.style.padding = 0;
-    this.cnv.width = window.innerWidth / 2;
-    this.cnv.height = window.innerHeight / 2 - 10;
+    this.cnv.width = 960;
+    this.cnv.height = 480;
 
     this.dataContainers.fps = document.getElementById('fps');
     this.dataContainers.population = document.getElementById('population');

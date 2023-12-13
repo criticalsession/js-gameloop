@@ -106,13 +106,13 @@ class Walker {
 
     return {
       xPos: this.xPos,
-      yPos: this.yPos
+      yPos: this.yPos,
     };
   }
 
   checkLimits() {
-    if (this.xPos > this.gridWidth) {
-      this.xPos = this.gridWidth - 1;
+    if (this.xPos > this.gridWidth - 1) {
+      this.xPos = this.gridWidth - 2;
       return this.directions.LEFT;
     }
 
@@ -126,8 +126,8 @@ class Walker {
       return this.directions.DOWN;
     }
 
-    if (this.yPos > this.gridHeight) {
-      this.yPos = this.gridHeight - 1;
+    if (this.yPos > this.gridHeight - 1) {
+      this.yPos = this.gridHeight - 2;
       return this.directions.UP;
     }
 
@@ -135,7 +135,7 @@ class Walker {
   }
 
   checkSpawnWalker() {
-    if (this.energy < 20) return null;
+    if (this.energy < 30) return null;
 
     if (getRandomInt(1, this.oddsOfSpawn) === this.oddsOfSpawn) {
       this.energy -= 50;
@@ -151,6 +151,17 @@ class Walker {
 
   die() {
     this.isAlive = false;
+  }
+
+  eat(grass) {
+    try {
+      if (grass.isAlive) {
+        this.energy += 20;
+        grass.getEaten();
+      }
+    } catch {
+      console.error('Failed while trying to eat grass at ', this.xPos, this.yPos);
+    }
   }
 }
 

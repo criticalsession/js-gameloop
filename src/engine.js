@@ -7,7 +7,7 @@ class Engine {
   constructor() {
     this.gameloop = new GameLoop();
     this.walkers = [];
-    this.grass = [,];
+    this.grass = [];
     this.drawHistoryEnabled = false;
     this.removeDeadWalkersCounter = 0;
     this.population = 0;
@@ -44,9 +44,6 @@ class Engine {
     };
 
     this.gameloop.update = () => {
-      this.renderWalkers = new Set();
-      this.renderGrass = new Set();
-
       this.walkers.forEach((walker) => {
         walker.walk();
         if (walker.isAlive) {
@@ -59,6 +56,9 @@ class Engine {
             walker.xPos * this.gridSize,
             walker.yPos * this.gridSize,
           ]);
+
+          // try to eat grass
+          walker.eat(this.grass[walker.xPos][walker.yPos]);
         }
       });
 
@@ -76,12 +76,14 @@ class Engine {
       this.canvas.fillStyle = colors.grass;
       for (let x = 0; x < this.gridWidth; x++) {
         for (let y = 0; y < this.gridHeight; y++) {
-          this.canvas.fillRect(
-            x * this.gridSize,
-            y * this.gridSize,
-            this.gridSize,
-            this.gridSize
-          );
+          if (this.grass[x][y].isAlive) {
+            this.canvas.fillRect(
+              x * this.gridSize,
+              y * this.gridSize,
+              this.gridSize,
+              this.gridSize
+            );
+          }
         }
       }
 
@@ -93,7 +95,6 @@ class Engine {
       this.gameloop.printData(this.population);
 
       this.renderWalkers.clear();
-      this.renderGrass.clear();
     };
   }
 
@@ -128,8 +129,9 @@ class Engine {
 
   initGrass() {
     for (let x = 0; x < this.gridWidth; x++) {
+      this.grass[x] = [];
       for (let y = 0; y < this.gridHeight; y++) {
-        this.grass[(x, y)] = new Grass(x, y);
+        this.grass[x][y] = new Grass(x, y);
       }
     }
   }

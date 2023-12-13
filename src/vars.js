@@ -1,8 +1,8 @@
 export const maxWalkers = 1000;
-export const maxFPS = 60;
+export const maxFPS = 30;
 export const lifespanMin = 1000;
 export const lifespanMax = 2000;
-export const initialWalkerEnergy = 200;
+export const initialWalkerEnergy = 100;
 export const colors = {
     ground: '#7765BD',
     walker: '#ECEE81',
