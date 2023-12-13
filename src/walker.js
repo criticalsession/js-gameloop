@@ -1,8 +1,10 @@
 import { getRandomInt } from "./utils.js";
 import { lifespanMin, lifespanMax, initialWalkerEnergy } from "./vars.js";
+import EventEmitter from "tiny-emitter";
 
-class Walker {
+class Walker extends EventEmitter {
   constructor() {
+    super();
     this.xPos = 0;
     this.yPos = 0;
 
@@ -151,6 +153,10 @@ class Walker {
 
   die() {
     this.isAlive = false;
+    this.emit('walker-died', {
+      x: this.xPos,
+      y: this.yPos
+    });
   }
 
   eat(grass) {
@@ -160,7 +166,11 @@ class Walker {
         grass.getEaten();
       }
     } catch {
-      console.error('Failed while trying to eat grass at ', this.xPos, this.yPos);
+      console.error(
+        "Failed while trying to eat grass at ",
+        this.xPos,
+        this.yPos
+      );
     }
   }
 }

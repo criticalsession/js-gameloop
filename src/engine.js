@@ -31,14 +31,20 @@ class Engine {
 
       this.canvas = this.gameloop.ctx;
 
-      this.walkers.forEach((walker) => {
+      for (let i = 0; i < this.population; i++) {
+        let walker = new Walker();
+        walker.on("walker-died", (data) => {
+          this.walkerDied(data);
+        });
         walker.init(
           parseInt(this.gridWidth / 2),
           parseInt(this.gridHeight / 2),
           this.gridWidth,
           this.gridHeight
         );
-      });
+
+        this.walkers.push(walker);
+      }
 
       this.initGrass();
     };
@@ -99,7 +105,6 @@ class Engine {
   }
 
   go() {
-    this.walkers.push(new Walker());
     this.population = 1;
     this.gameloop.start();
   }
@@ -112,6 +117,10 @@ class Engine {
       this.gridWidth,
       this.gridHeight
     );
+
+    newWalker.on("walker-died", (data) => {
+      this.walkerDied(data);
+    });
 
     this.walkers.push(newWalker);
     this.population++;
@@ -134,6 +143,10 @@ class Engine {
         this.grass[x][y] = new Grass(x, y);
       }
     }
+  }
+
+  walkerDied({ x, y }) {
+    this.grass[x][y].grow();
   }
 }
 
