@@ -1,10 +1,13 @@
-export const maxWalkers = 1000;
-export const maxFPS = 30;
-export const lifespanMin = 500;
-export const lifespanMax = 1000;
-export const initialWalkerEnergy = 100;
+export const maxWalkers = 10000;
+export const maxFPS = 60;
+export const lifespanMin = 100;
+export const lifespanMax = 400;
+export const initialWalkerEnergy = 1;
+export const grassGrowPercChance = 20;
+export const growGrassRate = 60;
+export const initialGrassRate = 5;
 export const colors = {
-    ground: '#7765BD',
-    walker: '#ECEE81',
-    grass: '#79AC78',
+    ground: '#116A7b',
+    walker: '#ffffff',
+    grass: '#739072',
 };

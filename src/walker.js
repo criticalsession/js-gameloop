@@ -49,7 +49,7 @@ class Walker extends EventEmitter {
     if (!this.isAlive) return;
 
     this.age++;
-    this.energy--;
+    //this.energy--;
 
     if (this.age >= this.maxAge) {
       this.die();

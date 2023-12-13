@@ -1,8 +1,8 @@
 class Grass {
-    constructor(x, y) {
+    constructor(x, y, alive = true) {
         this.xPos = x;
         this.yPos = y;
-        this.isAlive = true;
+        this.isAlive = alive;
     }
 
     getEaten() {

@@ -1,4 +1,4 @@
-import {maxFPS} from './vars.js'
+import { maxFPS } from "./vars.js";
 
 class GameLoop {
   constructor() {
@@ -27,8 +27,8 @@ class GameLoop {
     this.cnv.width = 960;
     this.cnv.height = 480;
 
-    this.dataContainers.fps = document.getElementById('fps');
-    this.dataContainers.population = document.getElementById('population');
+    this.dataContainers.fps = document.getElementById("fps");
+    this.dataContainers.population = document.getElementById("population");
   }
 
   init() {}
@@ -65,7 +65,9 @@ class GameLoop {
       this.ctx.fillStyle = "red";
       this.ctx.font = "bold 16px sans-serif";
       if (this.fps.lastFPS !== null) {
-        this.dataContainers.fps.innerHTML = `FPS: ${this.fps.lastFPS.toFixed(1)}`;
+        this.dataContainers.fps.innerHTML = `FPS: ${this.fps.lastFPS.toFixed(
+          1
+        )}`;
       } else {
         this.dataContainers.fps.innerHTML = `FPS: calculating...`;
       }

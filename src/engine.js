@@ -1,7 +1,16 @@
+import _ from "lodash";
+
+import { getRandomInt } from "./utils.js";
 import GameLoop from "./gameloop.js";
 import Walker from "./walker.js";
 import Grass from "./grass.js";
-import { maxWalkers, colors } from "./vars.js";
+import {
+  maxWalkers,
+  colors,
+  grassGrowPercChance,
+  growGrassRate,
+  initialGrassRate,
+} from "./vars.js";
 
 class Engine {
   constructor() {
@@ -13,6 +22,8 @@ class Engine {
     this.population = 0;
     this.cnvWidth = 0;
     this.cnvHeight = 0;
+
+    this.lastGrowGrass = 0;
 
     this.renderWalkers = new Set();
 
@@ -50,6 +61,12 @@ class Engine {
     };
 
     this.gameloop.update = () => {
+      this.lastGrowGrass += getRandomInt(-2, 5);
+      if (this.lastGrowGrass >= growGrassRate) {
+        this.growGrass();
+        this.lastGrowGrass = 0;
+      }
+
       this.walkers.forEach((walker) => {
         walker.walk();
         if (walker.isAlive) {
@@ -140,13 +157,53 @@ class Engine {
     for (let x = 0; x < this.gridWidth; x++) {
       this.grass[x] = [];
       for (let y = 0; y < this.gridHeight; y++) {
-        this.grass[x][y] = new Grass(x, y);
+        this.grass[x][y] = new Grass(x, y, getRandomInt(1, 100) <= initialGrassRate);
       }
     }
   }
 
   walkerDied({ x, y }) {
     this.grass[x][y].grow();
+  }
+
+  growGrass() {
+    let newGrass = [];
+
+    for (let x = 0; x < this.gridWidth; x++) {
+      newGrass[x] = [];
+
+      for (let y = 0; y < this.gridHeight; y++) {
+        let tile = this.grass[x][y];
+        newGrass[x][y] = _.cloneDeep(tile);
+
+        if (!tile.isAlive) {
+          let touchingGrass = 0;
+          for (let i = -1; i <= 1; i++) {
+            for (let j = -1; j <= 1; j++) {
+              if (i === 0 && j === 0) continue;
+              if (
+                x + i >= 0 &&
+                x + i < this.gridWidth &&
+                y + j >= 0 &&
+                y + j < this.gridHeight
+              ) {
+                if (this.grass[x + i][y + j].isAlive) {
+                  touchingGrass++;
+                }
+              }
+            }
+          }
+
+          if (touchingGrass > 0) {
+            if (getRandomInt(0, 100) <= (grassGrowPercChance / (touchingGrass / 2))) {
+              newGrass[x][y].grow();
+            }
+          }
+        }
+      }
+    }
+
+    this.grass = newGrass;
   }
 }
 
