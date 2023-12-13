@@ -53,7 +53,7 @@ class Walker {
     return this.size * 4;
   }
 
-  walk(cnv, engine) {
+  walk() {
     if (!this.isAlive) return;
 
     this.age++;
@@ -106,7 +106,7 @@ class Walker {
       break;
     }
 
-    const newDirection = this.checkLimits(cnv);
+    const newDirection = this.checkLimits();
     if (newDirection) direction = newDirection;
 
     this.lastDirection = direction;

@@ -34,7 +34,7 @@ class Engine {
       this.renderGrass = new Set();
 
       this.walkers.forEach((walker) => {
-        const newPosition = walker.walk(this.gameloop.cnv, this);
+        const newPosition = walker.walk();
         if (this.walkers.length < maxWalkers) {
           const walkerSpawned = walker.checkSpawnWalker();
           if (walkerSpawned !== null) this.onSpawnWalker(walkerSpawned);
@@ -73,7 +73,8 @@ class Engine {
 
       this.gameloop.printData(this.population);
 
-      this.renderCells.clear();
+      this.renderWalkers.clear();
+      this.renderGrass.clear();
     };
   }
 
