@@ -1,11 +1,13 @@
 import GameLoop from "./gameloop.js";
 import Walker from "./walker.js";
+import Grass from "./grass.js";
 import { maxWalkers, colors } from './vars.js';
 
 class Engine {
   constructor() {
     this.gameloop = new GameLoop();
     this.walkers = [];
+    this.grass = [];
     this.drawHistoryEnabled = false;
     this.removeDeadWalkersCounter = 0;
     this.population = 0;
@@ -27,6 +29,9 @@ class Engine {
           this.cnvHeight
         );
       });
+
+      this.grass.push(new Grass(this.cnvWidth / 2, this.cnvHeight / 2));
+      this.grass.push(new Grass(this.cnvWidth / 2, this.cnvHeight / 2));
     };
 
     this.gameloop.update = () => {
@@ -43,6 +48,10 @@ class Engine {
         if (walker.isAlive) {
           this.renderWalkers.add([ walker.xPos, walker.yPos, walker.size * 4 ]);
         }
+      });
+
+      this.grass.forEach((grass) => {
+        this.renderGrass.add([ grass.xPos, grass.yPos, grass.size ]);
       });
 
       this.removeDeadWalkersCounter++;
@@ -63,12 +72,12 @@ class Engine {
 
       this.gameloop.ctx.fillStyle = colors.grass;
       this.renderGrass.forEach(g => {
-        this.gameloop.ctx.fillRec(g[0], g[1], g[2], g[2]);
+        this.gameloop.ctx.fillRect(g[0], g[1], g[2], g[2]);
       });
 
       this.gameloop.ctx.fillStyle = colors.walker;
-      this.renderWalkers.forEach(cell => {
-        this.gameloop.ctx.fillRect(cell[0], cell[1], cell[2], cell[2]);
+      this.renderWalkers.forEach(w => {
+        this.gameloop.ctx.fillRect(w[0], w[1], w[2], w[2]);
       });
 
       this.gameloop.printData(this.population);

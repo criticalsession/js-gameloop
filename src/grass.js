@@ -1,6 +1,9 @@
 class Grass {
-    constructor() {
-        this.xPos = 0;
-        this.yPos = 0;
+    constructor(x, y) {
+        this.xPos = x;
+        this.yPos = y;
+        this.size = 4;  
     }
 }
+
+export default Grass;

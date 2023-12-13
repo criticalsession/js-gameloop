@@ -1,5 +1,5 @@
 import { getRandomInt } from "./utils.js";
-import { lifespanMin, lifespanMax } from "./vars.js";
+import { lifespanMin, lifespanMax, initialWalkerEnergy } from "./vars.js";
 
 class Walker {
   constructor() {
@@ -23,6 +23,8 @@ class Walker {
 
     this.cnvWidth = 0;
     this.cnvHeight = 0;
+
+    this.energy = initialWalkerEnergy;
 
     this.directions = {
       RIGHT: 1,
