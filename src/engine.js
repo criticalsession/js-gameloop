@@ -12,7 +12,8 @@ class Engine {
     this.cnvWidth = 0; 
     this.cnvHeight = 0;
 
-    this.renderCells = new Set();
+    this.renderWalkers = new Set();
+    this.renderGrass = new Set();
 
     this.gameloop.init = () => {
       this.cnvWidth = this.gameloop.cnv.width;
@@ -29,7 +30,9 @@ class Engine {
     };
 
     this.gameloop.update = () => {
-      this.renderCells = new Set();
+      this.renderWalkers = new Set();
+      this.renderGrass = new Set();
+
       this.walkers.forEach((walker) => {
         const newPosition = walker.walk(this.gameloop.cnv, this);
         if (this.walkers.length < maxWalkers) {
@@ -38,7 +41,7 @@ class Engine {
         }
 
         if (walker.isAlive) {
-          this.renderCells.add([ walker.xPos, walker.yPos, walker.size * 4 ]);
+          this.renderWalkers.add([ walker.xPos, walker.yPos, walker.size * 4 ]);
         }
       });
 
@@ -58,8 +61,13 @@ class Engine {
         this.cnvHeight
       );
 
-      this.renderCells.forEach(cell => {
-        this.gameloop.ctx.fillStyle = colors.walker;
+      this.gameloop.ctx.fillStyle = colors.grass;
+      this.renderGrass.forEach(g => {
+        this.gameloop.ctx.fillRec(g[0], g[1], g[2], g[2]);
+      });
+
+      this.gameloop.ctx.fillStyle = colors.walker;
+      this.renderWalkers.forEach(cell => {
         this.gameloop.ctx.fillRect(cell[0], cell[1], cell[2], cell[2]);
       });
 

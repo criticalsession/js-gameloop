@@ -6,4 +6,4 @@ export const colors = {
     ground: '#7765BD',
     walker: '#ECEE81',
     grass: '#79AC78',
-}
+};

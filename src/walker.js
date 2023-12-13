@@ -5,7 +5,6 @@ class Walker {
   constructor() {
     this.xPos = 0;
     this.yPos = 0;
-    this.color = "black";
 
     this.size = 1;
     this.step = 4;
