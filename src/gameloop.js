@@ -87,7 +87,7 @@ class GameLoop {
     this.render();
     setTimeout(() => {
       this.renderCycle();
-    }, 1);
+    }, 1000 / maxFPS);
   }
 }
 

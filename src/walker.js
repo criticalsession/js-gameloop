@@ -1,5 +1,5 @@
 import { getRandomInt } from "./utils.js";
-import { deathInitialMaxAge, deathInitialMinAge } from "./vars.js";
+import { lifespanMin, lifespanMax } from "./vars.js";
 
 class Walker {
   constructor() {
@@ -16,7 +16,7 @@ class Walker {
     this.speedCounter = 0;
 
     this.age = 0;
-    this.maxAge = 0;
+    this.lifespan = 0;
     this.isAlive = true;
 
     this.oddsOfSpawn = 100;
@@ -43,7 +43,7 @@ class Walker {
     this.cnvWidth = cnvWidth;
     this.cnvHeight = cnvHeight;
 
-    this.maxAge = getRandomInt(deathInitialMinAge, deathInitialMaxAge);
+    this.maxAge = getRandomInt(lifespanMin, lifespanMax);
   }
 
   calculateSpeed() {
