@@ -6,13 +6,9 @@ class Walker {
     this.xPos = 0;
     this.yPos = 0;
 
-    this.size = 1;
-    this.step = 4;
-
     this.lastDirection = null;
 
     this.baseSpeed = 0; // lower is faster, 1 is fastest
-    this.speedCounter = 0;
 
     this.age = 0;
     this.lifespan = 0;
@@ -21,8 +17,8 @@ class Walker {
     this.oddsOfSpawn = 100;
     this.keepDirectionPerc = 80;
 
-    this.cnvWidth = 0;
-    this.cnvHeight = 0;
+    this.gridWidth = 0;
+    this.gridHeight = 0;
 
     this.energy = initialWalkerEnergy;
 
@@ -38,21 +34,13 @@ class Walker {
     };
   }
 
-  init(startX, startY, cnvWidth, cnvHeight) {
+  init(startX, startY, gridWidth, gridHeight) {
     this.xPos = startX;
     this.yPos = startY;
-    this.cnvWidth = cnvWidth;
-    this.cnvHeight = cnvHeight;
+    this.gridWidth = gridWidth;
+    this.gridHeight = gridHeight;
 
     this.maxAge = getRandomInt(lifespanMin, lifespanMax);
-  }
-
-  calculateSpeed() {
-    return this.baseSpeed * (this.size * this.size);
-  }
-
-  drawSize() {
-    return this.size * 4;
   }
 
   walk() {
@@ -71,14 +59,7 @@ class Walker {
       return;
     }
 
-    if (this.speedCounter < this.calculateSpeed()) {
-      this.speedCounter++;
-      return null;
-    }
-
-    this.speedCounter = 0;
-
-    const keepDirection = getRandomInt(0, 100);
+    const keepDirection = getRandomInt(0, 100); // todo: extract keep direction to vars
     let direction = getRandomInt(1, 8);
     if (
       keepDirection >= 100 - this.keepDirectionPerc &&
@@ -89,32 +70,32 @@ class Walker {
 
     switch (direction) {
       case this.directions.RIGHT:
-        this.xPos += this.step;
+        this.xPos++;
         break;
       case this.directions.LEFT:
-        this.xPos += -this.step;
+        this.xPos--;
         break;
       case this.directions.DOWN:
-        this.yPos += this.step;
+        this.yPos++;
         break;
       case this.directions.UP:
-        this.yPos += -this.step;
+        this.yPos--;
         break;
       case this.directions.RIGHT_UP:
-        this.xPos += this.step;
-        this.yPos += -this.step;
+        this.xPos++;
+        this.yPos--;
         break;
       case this.directions.RIGHT_DOWN:
-        this.xPos += this.step;
-        this.yPos += this.step;
+        this.xPos++;
+        this.yPos++;
         break;
       case this.directions.LEFT_UP:
-        this.xPos += -this.step;
-        this.yPos += -this.step;
+        this.xPos--;
+        this.yPos--;
         break;
       case this.directions.LEFT_DOWN:
-        this.xPos += -this.step;
-        this.yPos += this.step;
+        this.xPos--;
+        this.yPos++;
         break;
     }
 
@@ -125,14 +106,13 @@ class Walker {
 
     return {
       xPos: this.xPos,
-      yPos: this.yPos,
-      size: this.drawSize(),
+      yPos: this.yPos
     };
   }
 
   checkLimits() {
-    if (this.xPos + this.drawSize() > this.cnvWidth) {
-      this.xPos = this.cnvWidth - this.drawSize();
+    if (this.xPos > this.gridWidth) {
+      this.xPos = this.gridWidth - 1;
       return this.directions.LEFT;
     }
 
@@ -146,8 +126,8 @@ class Walker {
       return this.directions.DOWN;
     }
 
-    if (this.yPos + this.drawSize() > this.cnvHeight) {
-      this.yPos = this.cnvHeight - this.drawSize();
+    if (this.yPos > this.gridHeight) {
+      this.yPos = this.gridHeight - 1;
       return this.directions.UP;
     }
 
