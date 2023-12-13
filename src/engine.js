@@ -1,6 +1,6 @@
 import GameLoop from "./gameloop.js";
 import Walker from "./walker.js";
-import { maxWalkers } from './vars.js';
+import { maxWalkers, colors } from './vars.js';
 
 class Engine {
   constructor() {
@@ -50,7 +50,7 @@ class Engine {
     };
 
     this.gameloop.render = () => {
-      this.gameloop.ctx.fillStyle = "white";
+      this.gameloop.ctx.fillStyle = colors.ground;
       this.gameloop.ctx.fillRect(
         0,
         0,
@@ -59,7 +59,7 @@ class Engine {
       );
 
       this.renderCells.forEach(cell => {
-        this.gameloop.ctx.fillStyle = 'black';
+        this.gameloop.ctx.fillStyle = colors.walker;
         this.gameloop.ctx.fillRect(cell[0], cell[1], cell[2], cell[2]);
       });
 
